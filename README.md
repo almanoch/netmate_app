@@ -1,3 +1,9 @@
+#Netmate: sample application
+
+This is the sample application for [*Netmate:A Social Internet Site*]
+(http://netmate.com/) by [Anatoliy Khan]. 
+
+
 == Welcome to Rails
 
 Rails is a web-application framework that includes everything needed to create
