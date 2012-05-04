@@ -9,10 +9,15 @@ describe "Pages" do
       page.should have_selector('h1', :text => 'Netmate')
     end
     
-    it "should have the title 'Home'" do
+    it "should have the base title" do
       visit '/pages/home'
       page.should have_selector('title',
-                        :text => "Social Site Netmate | Home")
+                        :text => "Social Site Netmate")
+    end
+    
+    it "should not have a custom page title" do
+      visit '/pages/home'
+      page.should_not have_selector('title', :text => '| Home')
     end
   end
   
