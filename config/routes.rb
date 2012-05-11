@@ -1,11 +1,15 @@
 NetmateApp::Application.routes.draw do
-  get "pages/home"
+  get "users/new"
 
-  get "pages/help"
+  root to: 'pages#home'
+  
+  match'/signup',   to: 'users#new'
 
-  get "pages/about"
+  match '/help',    to: 'pages#help'
 
-  get "pages/contact"
+  match '/about',   to: 'pages#about'
+
+  match '/contact', to: 'pages#contact'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
