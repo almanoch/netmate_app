@@ -7,5 +7,14 @@
 	          <%= @user.name %>
            </h1>
         </section>
-    </aside>    
+    </aside> 
+    <div class="span8">
+      <% if @user.micromessages.any? %>
+    	<h3>Micromessages (<%= @user.micromessages.count %>)</h3>
+    	<ol class="micromessages">
+    		<%= render @micromessages %>
+    	</ol>
+    	<%= will_paginate @micromessages %>
+      <% end %>
+    </div>   
 </div>

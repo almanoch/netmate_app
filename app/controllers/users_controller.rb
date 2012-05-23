@@ -10,6 +10,7 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find(params[:id])
+    @micromessages = @user.micromessages.paginate(page: params[:page])
   end
   
   def new

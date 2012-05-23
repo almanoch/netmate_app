@@ -27,6 +27,8 @@ describe User do
   it { should respond_to(:password_confirmation) }
   it { should respond_to(:remember_token) }
   it { should respond_to(:authenticate) }
+  it { should respond_to(:micromessages) }
+  it { should respond_to(:feed) }
   
   it { should be_valid }
   it { should_not be_admin }
@@ -121,5 +123,38 @@ describe User do
   describe "remember token" do
     before { @user.save }
     its(:remember_token) { should_not be_blank }
+  end
+  
+  describe "micromessage associations" do
+    
+    before { @user.save }
+    let!(:older_micromessage) do
+      FactoryGirl.create(:micromessage, user: @user, created_at: 1.day.ago)
+    end
+    let!(:newer_micromessage) do
+      FactoryGirl.create(:micromessage, user: @user, created_at: 1.hour.ago)
+    end
+    
+    it "should have the right micromessages in the right order" do
+      @user.micromessages.should == [newer_micromessage, older_micromessage]
+    end
+    
+    it "should destroy associated micromessages" do
+      micromessages = @user.micromessages
+      @user.destroy
+      micromessages.each do |micromessage|
+        Micromessage.find_by_id(micropost.id).should be_nil
+      end
+    end
+    
+    describe "status" do
+    let(:unfollowed_post) do
+      FactoryGirl.create(:micromessage, user: FactoryGirl.create(:user))
+    end
+    
+    its(:feed) { should include(newer_micromessage) }
+    its(:feed) { should include(older_micromessage) }
+    its(:feed) { should_not include(unfollowed_post) }
+    end
   end
 end

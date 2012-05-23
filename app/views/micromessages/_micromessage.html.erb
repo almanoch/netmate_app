@@ -1,0 +1,11 @@
+<li>
+	<span class="content"><%= micromessage.content %></span>
+	<span class="timestamp">
+		Posted <%= time_ago_in_words(micromessage.created_at) %> ago.
+	</span>
+	<% if current_user?(micromessage.user) %>
+	  <%= link_to "delete", micromessage, method: :delete,
+	                                      confirm: "You sure?",
+	                                      title: micromessage.content %>
+   <% end %>
+</li>
